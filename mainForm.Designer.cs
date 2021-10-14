@@ -33,15 +33,16 @@ namespace GPS_Resuce_Receiver_GUI
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.cbxComPort = new System.Windows.Forms.ToolStripComboBox();
             this.tbxBaud = new System.Windows.Forms.ToolStripTextBox();
+            this.serialGps = new System.IO.Ports.SerialPort(this.components);
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbConfig = new System.Windows.Forms.GroupBox();
+            this.gbInfo = new System.Windows.Forms.GroupBox();
+            this.browserMap = new CefSharp.WinForms.ChromiumWebBrowser();
+            this.btnRefreshPort = new System.Windows.Forms.ToolStripButton();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.btnAbout = new System.Windows.Forms.ToolStripButton();
-            this.serialGps = new System.IO.Ports.SerialPort(this.components);
-            this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.gbInfo = new System.Windows.Forms.GroupBox();
-            this.gbConfig = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.browserMap = new CefSharp.WinForms.ChromiumWebBrowser();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -52,6 +53,7 @@ namespace GPS_Resuce_Receiver_GUI
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnRefreshPort,
             this.cbxComPort,
             this.tbxBaud,
             this.btnConnect,
@@ -66,7 +68,7 @@ namespace GPS_Resuce_Receiver_GUI
             // cbxComPort
             // 
             this.cbxComPort.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.cbxComPort.Margin = new System.Windows.Forms.Padding(10, 0, 1, 0);
+            this.cbxComPort.Margin = new System.Windows.Forms.Padding(5, 0, 1, 0);
             this.cbxComPort.Name = "cbxComPort";
             this.cbxComPort.Size = new System.Drawing.Size(159, 29);
             this.cbxComPort.Text = "端口選擇...";
@@ -80,6 +82,88 @@ namespace GPS_Resuce_Receiver_GUI
             this.tbxBaud.Size = new System.Drawing.Size(100, 29);
             this.tbxBaud.Text = "9600";
             this.tbxBaud.ToolTipText = "與接收器的傳輸速率，一般皆設9600bps。";
+            // 
+            // splitContainer
+            // 
+            this.splitContainer.BackColor = System.Drawing.SystemColors.Control;
+            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10F);
+            this.splitContainer.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.splitContainer.IsSplitterFixed = true;
+            this.splitContainer.Location = new System.Drawing.Point(0, 29);
+            this.splitContainer.Margin = new System.Windows.Forms.Padding(10);
+            this.splitContainer.Name = "splitContainer";
+            // 
+            // splitContainer.Panel1
+            // 
+            this.splitContainer.Panel1.Controls.Add(this.groupBox1);
+            this.splitContainer.Panel1.Controls.Add(this.gbConfig);
+            this.splitContainer.Panel1.Controls.Add(this.gbInfo);
+            // 
+            // splitContainer.Panel2
+            // 
+            this.splitContainer.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.splitContainer.Panel2.Controls.Add(this.browserMap);
+            this.splitContainer.Size = new System.Drawing.Size(965, 562);
+            this.splitContainer.SplitterDistance = 262;
+            this.splitContainer.SplitterWidth = 6;
+            this.splitContainer.TabIndex = 2;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 294);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(10);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox1.Size = new System.Drawing.Size(262, 268);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "歷史紀錄";
+            // 
+            // gbConfig
+            // 
+            this.gbConfig.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbConfig.Location = new System.Drawing.Point(0, 146);
+            this.gbConfig.Margin = new System.Windows.Forms.Padding(10);
+            this.gbConfig.Name = "gbConfig";
+            this.gbConfig.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbConfig.Size = new System.Drawing.Size(262, 148);
+            this.gbConfig.TabIndex = 1;
+            this.gbConfig.TabStop = false;
+            this.gbConfig.Text = "傳輸設定";
+            // 
+            // gbInfo
+            // 
+            this.gbInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbInfo.Location = new System.Drawing.Point(0, 0);
+            this.gbInfo.Margin = new System.Windows.Forms.Padding(10);
+            this.gbInfo.Name = "gbInfo";
+            this.gbInfo.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbInfo.Size = new System.Drawing.Size(262, 146);
+            this.gbInfo.TabIndex = 0;
+            this.gbInfo.TabStop = false;
+            this.gbInfo.Text = "資訊概要";
+            // 
+            // browserMap
+            // 
+            this.browserMap.ActivateBrowserOnCreation = false;
+// TODO: Code generation for '' failed because of Exception 'Invalid Primitive Type: System.IntPtr. Consider using CodeObjectCreateExpression.'.
+            this.browserMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.browserMap.Location = new System.Drawing.Point(0, 0);
+            this.browserMap.Name = "browserMap";
+            this.browserMap.Size = new System.Drawing.Size(697, 562);
+            this.browserMap.TabIndex = 0;
+            // 
+            // btnRefreshPort
+            // 
+            this.btnRefreshPort.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnRefreshPort.Image = global::GPS_Resuce_Receiver_GUI.Properties.Resources.refresh;
+            this.btnRefreshPort.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefreshPort.Name = "btnRefreshPort";
+            this.btnRefreshPort.Size = new System.Drawing.Size(85, 26);
+            this.btnRefreshPort.Text = "重新整理";
+            this.btnRefreshPort.Click += new System.EventHandler(this.btnRefreshPort_Click);
             // 
             // btnConnect
             // 
@@ -115,78 +199,6 @@ namespace GPS_Resuce_Receiver_GUI
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(66, 26);
             this.btnAbout.Text = "關於...";
-            // 
-            // splitContainer
-            // 
-            this.splitContainer.BackColor = System.Drawing.SystemColors.Control;
-            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10F);
-            this.splitContainer.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.splitContainer.IsSplitterFixed = true;
-            this.splitContainer.Location = new System.Drawing.Point(0, 29);
-            this.splitContainer.Margin = new System.Windows.Forms.Padding(10);
-            this.splitContainer.Name = "splitContainer";
-            // 
-            // splitContainer.Panel1
-            // 
-            this.splitContainer.Panel1.Controls.Add(this.groupBox1);
-            this.splitContainer.Panel1.Controls.Add(this.gbConfig);
-            this.splitContainer.Panel1.Controls.Add(this.gbInfo);
-            // 
-            // splitContainer.Panel2
-            // 
-            this.splitContainer.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.splitContainer.Panel2.Controls.Add(this.browserMap);
-            this.splitContainer.Size = new System.Drawing.Size(965, 562);
-            this.splitContainer.SplitterDistance = 262;
-            this.splitContainer.SplitterWidth = 6;
-            this.splitContainer.TabIndex = 2;
-            // 
-            // gbInfo
-            // 
-            this.gbInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbInfo.Location = new System.Drawing.Point(0, 0);
-            this.gbInfo.Margin = new System.Windows.Forms.Padding(10);
-            this.gbInfo.Name = "gbInfo";
-            this.gbInfo.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gbInfo.Size = new System.Drawing.Size(262, 146);
-            this.gbInfo.TabIndex = 0;
-            this.gbInfo.TabStop = false;
-            this.gbInfo.Text = "資訊概要";
-            // 
-            // gbConfig
-            // 
-            this.gbConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbConfig.Location = new System.Drawing.Point(0, 146);
-            this.gbConfig.Margin = new System.Windows.Forms.Padding(10);
-            this.gbConfig.Name = "gbConfig";
-            this.gbConfig.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gbConfig.Size = new System.Drawing.Size(262, 148);
-            this.gbConfig.TabIndex = 1;
-            this.gbConfig.TabStop = false;
-            this.gbConfig.Text = "傳輸設定";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 294);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(10);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox1.Size = new System.Drawing.Size(262, 268);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "歷史紀錄";
-            // 
-            // browserMap
-            // 
-            this.browserMap.ActivateBrowserOnCreation = false;
-// TODO: Code generation for '' failed because of Exception 'Invalid Primitive Type: System.IntPtr. Consider using CodeObjectCreateExpression.'.
-            this.browserMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.browserMap.Location = new System.Drawing.Point(0, 0);
-            this.browserMap.Name = "browserMap";
-            this.browserMap.Size = new System.Drawing.Size(697, 562);
-            this.browserMap.TabIndex = 0;
             // 
             // mainForm
             // 
@@ -227,6 +239,7 @@ namespace GPS_Resuce_Receiver_GUI
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox gbConfig;
         private CefSharp.WinForms.ChromiumWebBrowser browserMap;
+        private System.Windows.Forms.ToolStripButton btnRefreshPort;
     }
 }
 

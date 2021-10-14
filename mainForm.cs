@@ -62,5 +62,19 @@ namespace GPS_Resuce_Receiver_GUI
             /** Set Container Visible to False **/
             splitContainer.Visible = false;
         }
+
+        private void btnRefreshPort_Click(object sender, EventArgs e)
+        {
+            /** Clear Existing Port List**/
+            cbxComPort.Items.Clear();
+
+            /** Add Ports Into ComboBox **/
+            string[] ports = SerialPort.GetPortNames();
+
+            foreach (string port in ports)
+            {
+                cbxComPort.Items.Add(port);
+            }
+        }
     }
 }
