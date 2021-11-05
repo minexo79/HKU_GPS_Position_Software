@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPS_Resuce_Receiver_GUI", "GPS_Resuce_Receiver_GUI.csproj", "{64F2A765-582A-410E-9694-66BA11F3086F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPS_Resuce_Receiver", "GPS_Resuce_Receiver.csproj", "{64F2A765-582A-410E-9694-66BA11F3086F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
