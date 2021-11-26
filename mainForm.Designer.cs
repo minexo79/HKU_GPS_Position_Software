@@ -40,7 +40,8 @@ namespace GPS_Resuce_Receiver_GUI
             this.gbHistory = new System.Windows.Forms.GroupBox();
             this.gbConfig = new System.Windows.Forms.GroupBox();
             this.gbInfo = new System.Windows.Forms.GroupBox();
-            this.btnTest = new System.Windows.Forms.Button();
+            this.tbTime = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.tbLatitude = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbLongtitude = new System.Windows.Forms.TextBox();
@@ -48,16 +49,22 @@ namespace GPS_Resuce_Receiver_GUI
             this.tbClientID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.browserMap = new CefSharp.WinForms.ChromiumWebBrowser();
+            this.tbSelectDeviceID = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnDeviceID = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
+            this.gbConfig.SuspendLayout();
             this.gbInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
+            this.toolStrip1.BackColor = System.Drawing.SystemColors.Control;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cbxComPort,
             this.tbxBaud,
@@ -66,6 +73,7 @@ namespace GPS_Resuce_Receiver_GUI
             this.btnAbout,
             this.btnRefreshPort});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Margin = new System.Windows.Forms.Padding(2);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(2);
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -158,37 +166,42 @@ namespace GPS_Resuce_Receiver_GUI
             this.splitContainer.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.splitContainer.Panel2.Controls.Add(this.browserMap);
             this.splitContainer.Size = new System.Drawing.Size(964, 558);
-            this.splitContainer.SplitterDistance = 230;
+            this.splitContainer.SplitterDistance = 200;
             this.splitContainer.SplitterWidth = 6;
             this.splitContainer.TabIndex = 2;
             // 
             // gbHistory
             // 
             this.gbHistory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbHistory.Location = new System.Drawing.Point(0, 366);
+            this.gbHistory.Location = new System.Drawing.Point(0, 382);
             this.gbHistory.Margin = new System.Windows.Forms.Padding(10);
             this.gbHistory.Name = "gbHistory";
             this.gbHistory.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gbHistory.Size = new System.Drawing.Size(230, 192);
+            this.gbHistory.Size = new System.Drawing.Size(200, 176);
             this.gbHistory.TabIndex = 2;
             this.gbHistory.TabStop = false;
             this.gbHistory.Text = "歷史紀錄";
             // 
             // gbConfig
             // 
+            this.gbConfig.BackColor = System.Drawing.SystemColors.Control;
+            this.gbConfig.Controls.Add(this.btnDeviceID);
+            this.gbConfig.Controls.Add(this.label5);
+            this.gbConfig.Controls.Add(this.tbSelectDeviceID);
             this.gbConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbConfig.Location = new System.Drawing.Point(0, 218);
+            this.gbConfig.Location = new System.Drawing.Point(0, 252);
             this.gbConfig.Margin = new System.Windows.Forms.Padding(10);
             this.gbConfig.Name = "gbConfig";
             this.gbConfig.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gbConfig.Size = new System.Drawing.Size(230, 148);
+            this.gbConfig.Size = new System.Drawing.Size(200, 130);
             this.gbConfig.TabIndex = 1;
             this.gbConfig.TabStop = false;
-            this.gbConfig.Text = "傳輸設定 (尚在開發中)";
+            this.gbConfig.Text = "傳輸設定";
             // 
             // gbInfo
             // 
-            this.gbInfo.Controls.Add(this.btnTest);
+            this.gbInfo.Controls.Add(this.tbTime);
+            this.gbInfo.Controls.Add(this.label4);
             this.gbInfo.Controls.Add(this.tbLatitude);
             this.gbInfo.Controls.Add(this.label3);
             this.gbInfo.Controls.Add(this.tbLongtitude);
@@ -200,37 +213,48 @@ namespace GPS_Resuce_Receiver_GUI
             this.gbInfo.Margin = new System.Windows.Forms.Padding(10);
             this.gbInfo.Name = "gbInfo";
             this.gbInfo.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gbInfo.Size = new System.Drawing.Size(230, 218);
+            this.gbInfo.Size = new System.Drawing.Size(200, 252);
             this.gbInfo.TabIndex = 0;
             this.gbInfo.TabStop = false;
             this.gbInfo.Text = "資訊概要";
             // 
-            // btnTest
+            // tbTime
             // 
-            this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTest.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.btnTest.Location = new System.Drawing.Point(134, 40);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(90, 35);
-            this.btnTest.TabIndex = 6;
-            this.btnTest.Text = "封包測試";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            this.tbTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbTime.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F, System.Drawing.FontStyle.Bold);
+            this.tbTime.Location = new System.Drawing.Point(9, 98);
+            this.tbTime.Name = "tbTime";
+            this.tbTime.Size = new System.Drawing.Size(185, 33);
+            this.tbTime.TabIndex = 8;
+            this.tbTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 77);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 18);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "裝置時間";
             // 
             // tbLatitude
             // 
             this.tbLatitude.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbLatitude.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F, System.Drawing.FontStyle.Bold);
-            this.tbLatitude.Location = new System.Drawing.Point(9, 170);
+            this.tbLatitude.Location = new System.Drawing.Point(9, 212);
             this.tbLatitude.Name = "tbLatitude";
-            this.tbLatitude.Size = new System.Drawing.Size(215, 33);
+            this.tbLatitude.Size = new System.Drawing.Size(185, 33);
             this.tbLatitude.TabIndex = 5;
+            this.tbLatitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 149);
+            this.label3.Location = new System.Drawing.Point(6, 191);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 18);
             this.label3.TabIndex = 4;
@@ -241,15 +265,16 @@ namespace GPS_Resuce_Receiver_GUI
             this.tbLongtitude.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbLongtitude.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F, System.Drawing.FontStyle.Bold);
-            this.tbLongtitude.Location = new System.Drawing.Point(9, 110);
+            this.tbLongtitude.Location = new System.Drawing.Point(9, 155);
             this.tbLongtitude.Name = "tbLongtitude";
-            this.tbLongtitude.Size = new System.Drawing.Size(215, 33);
+            this.tbLongtitude.Size = new System.Drawing.Size(185, 33);
             this.tbLongtitude.TabIndex = 3;
+            this.tbLongtitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 89);
+            this.label2.Location = new System.Drawing.Point(6, 134);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 18);
             this.label2.TabIndex = 2;
@@ -257,20 +282,23 @@ namespace GPS_Resuce_Receiver_GUI
             // 
             // tbClientID
             // 
+            this.tbClientID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbClientID.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F, System.Drawing.FontStyle.Bold);
             this.tbClientID.Location = new System.Drawing.Point(9, 42);
             this.tbClientID.Name = "tbClientID";
-            this.tbClientID.Size = new System.Drawing.Size(124, 33);
+            this.tbClientID.Size = new System.Drawing.Size(185, 33);
             this.tbClientID.TabIndex = 1;
+            this.tbClientID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 18);
+            this.label1.Size = new System.Drawing.Size(51, 18);
             this.label1.TabIndex = 0;
-            this.label1.Text = "登山者手持裝置ID";
+            this.label1.Text = "裝置ID";
             // 
             // browserMap
             // 
@@ -279,8 +307,41 @@ namespace GPS_Resuce_Receiver_GUI
             this.browserMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.browserMap.Location = new System.Drawing.Point(0, 0);
             this.browserMap.Name = "browserMap";
-            this.browserMap.Size = new System.Drawing.Size(728, 558);
+            this.browserMap.Size = new System.Drawing.Size(758, 558);
             this.browserMap.TabIndex = 2;
+            // 
+            // tbSelectDeviceID
+            // 
+            this.tbSelectDeviceID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSelectDeviceID.Font = new System.Drawing.Font("Microsoft JhengHei UI", 15F, System.Drawing.FontStyle.Bold);
+            this.tbSelectDeviceID.Location = new System.Drawing.Point(9, 42);
+            this.tbSelectDeviceID.Name = "tbSelectDeviceID";
+            this.tbSelectDeviceID.Size = new System.Drawing.Size(185, 33);
+            this.tbSelectDeviceID.TabIndex = 6;
+            this.tbSelectDeviceID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 21);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(92, 18);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "指定裝置編號";
+            // 
+            // btnDeviceID
+            // 
+            this.btnDeviceID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeviceID.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnDeviceID.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnDeviceID.Location = new System.Drawing.Point(9, 85);
+            this.btnDeviceID.Name = "btnDeviceID";
+            this.btnDeviceID.Size = new System.Drawing.Size(185, 32);
+            this.btnDeviceID.TabIndex = 10;
+            this.btnDeviceID.Text = "裝置編號確認";
+            this.btnDeviceID.UseVisualStyleBackColor = true;
             // 
             // mainForm
             // 
@@ -297,6 +358,7 @@ namespace GPS_Resuce_Receiver_GUI
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(980, 630);
             this.Name = "mainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "登山救援系統V1.0";
             this.Load += new System.EventHandler(this.mainForm_Load);
             this.toolStrip1.ResumeLayout(false);
@@ -305,6 +367,8 @@ namespace GPS_Resuce_Receiver_GUI
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
+            this.gbConfig.ResumeLayout(false);
+            this.gbConfig.PerformLayout();
             this.gbInfo.ResumeLayout(false);
             this.gbInfo.PerformLayout();
             this.ResumeLayout(false);
@@ -330,9 +394,13 @@ namespace GPS_Resuce_Receiver_GUI
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbClientID;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnTest;
         private CefSharp.WinForms.ChromiumWebBrowser browserMap;
         private System.Windows.Forms.GroupBox gbConfig;
+        private System.Windows.Forms.TextBox tbTime;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnDeviceID;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbSelectDeviceID;
     }
 }
 

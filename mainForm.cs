@@ -58,25 +58,14 @@ namespace GPS_Resuce_Receiver_GUI
         {
             SerialPort se = (SerialPort)sender;
 
-            Char[] indata = new Char[64];
+            char[] _indata = new char[41];
 
-            indata = se.ReadExisting().ToCharArray();
-        }
+            for (int i = 0; i < _indata.Length;)
+                i += se.Read(_indata, i, _indata.Length - i);
 
+            string indata = new string(_indata);
 
-        private string convertToDMS(float src)
-        {
-            // XXYY.ZZZZZ => XX YY 0.ZZ
-
-            int degree = (int)(src / 100);                      // XX
-
-            int minute = (int)(((src / 100.0) - degree) * 100); // YY
-
-            float second = (src - (int)(src)) * 60;             // 0.ZZ
-
-            string res = $"{degree}°{minute}'{second.ToString("00.0")}\x34";
-            
-            return res;
+            this.BeginInvoke(new showGpsAddress(ShowGpsAddress), new object[] { indata });
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -89,15 +78,14 @@ namespace GPS_Resuce_Receiver_GUI
              *  STOP BITS:  1 bit
              **/
 
-            //try
-            //{
+            try
+            {
+                serialGps.PortName = cbxComPort.SelectedItem.ToString();
+                serialGps.BaudRate = int.Parse(tbxBaud.Text);
 
-                //serialGps.PortName = cbxComPort.SelectedItem.ToString();
-                //serialGps.BaudRate = int.Parse(tbxBaud.Text);
-
-                //if (!serialGps.IsOpen)
-                //{
-                    //serialGps.Open();
+                if (!serialGps.IsOpen)
+                {
+                    serialGps.Open();
                     /** Set Container Visible to True **/
                     splitContainer.Visible = true;
 
@@ -107,19 +95,19 @@ namespace GPS_Resuce_Receiver_GUI
 
                     /** Set Web Browser Pages to Google Map **/
                     browserMap.Load(googleMapHost);
-            //    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = "請檢查設定是否正確。\n"
+                    + "1. 是否有選擇到正確的Port？\n"
+                    + "2. 檢查傳輸速率是否有填入？（一般均9600）\n\n"
+                    + $"錯誤訊息：{ex.Message}";
 
-            //} catch (Exception ex)
-            //{
-            //    string errorMsg = "請檢查設定是否正確。\n"
-            //            + "1. 是否有選擇到正確的Port？\n"
-            //            + "2. 檢查傳輸速率是否有填入？（一般均9600）\n\n"
-            //            + $"錯誤訊息：{ex.Message}";
-
-            //    MessageBox.Show(errorMsg,
-            //        "歐歐，發現錯誤",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                MessageBox.Show(errorMsg,
+                "歐歐，發現錯誤",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)
@@ -147,34 +135,51 @@ namespace GPS_Resuce_Receiver_GUI
             }
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
+        private delegate void showGpsAddress(string srcStr);
+        private void ShowGpsAddress(string srcStr)
         {
-            string testStr = "\x00\x01\x27\x0F" + "2413.00710,N,12035.05815,E,111520" + "\x0D\x0A";
+            //string testStr = "\x00\x01\x27\x0F" + "2413.00710,N,12035.05815,E,111520" + "\x0D\x0A";
 
-            char[] array = testStr.ToCharArray();
+            // remove head count
+            char[] array = srcStr.Remove(0, 2).ToCharArray();
+            string locationStr = srcStr.Remove(0, 6);
+
+            string[]
 
             // get Device ID
             UInt16 deviceID = (ushort)((array[0] << 8) + array[1]);
 
-            // get Location
-            string gpsLatitude = testStr.Substring(4, testStr.IndexOf('N') - 3);                                                    // 緯度
-            string gpsLongtitude = testStr.Substring(testStr.IndexOf('N') + 2, testStr.IndexOf('E') - (gpsLatitude.Length + 4));    // 經度
+            // 緯度
+            string gpsLatitude = locationStr.Substring(0, locationStr.IndexOf('N') + 1);
+            // 經度
+            string gpsLongtitude = locationStr.Substring(locationStr.IndexOf('N') + 2,
+                                                         locationStr.IndexOf('E') - (gpsLatitude.Length));
+            // UTC時間
+            string gpsTime = locationStr.Substring(locationStr.IndexOf('E') + 2, 6);
 
             // convert To Float
             float LatitudeWithoutN = float.Parse(gpsLatitude.Replace(",N", ""));
             float LongtitudeWithoutE = float.Parse(gpsLongtitude.Replace(",E", ""));
 
             // convert DMM TO DMS
-            gpsLatitude = convertToDMS(LatitudeWithoutN);
-            gpsLongtitude = convertToDMS(LongtitudeWithoutE);
+            gpsLatitude = GpsConvert.convertToDMS(LatitudeWithoutN);
+            gpsLongtitude = GpsConvert.convertToDMS(LongtitudeWithoutE);
+            // convert UTC TO CST
+            gpsTime = GpsConvert.convertToCST(gpsTime);
 
             // Display in TextBox
             tbClientID.Text = deviceID.ToString();
             tbLatitude.Text = gpsLatitude + "N";
             tbLongtitude.Text = gpsLongtitude + "E";
+            tbTime.Text = gpsTime;
 
             // Browser Display
             browserMap.Load(googleMapHost + "/place/" + gpsLatitude + "N+" + gpsLongtitude + "E");
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            ShowGpsAddress("\x00\x01\x00\x01\x27\x0F" + "2413.00710,N,12035.05815,E,111520" + "\x0D\x0A");   
         }
     }
 }
