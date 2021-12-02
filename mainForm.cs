@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using WeifenLuo.WinFormsUI.Docking;
+using CefSharp.WinForms;
 
 namespace GPS_Resuce_Receiver_GUI
 {
@@ -17,9 +19,27 @@ namespace GPS_Resuce_Receiver_GUI
         private SerialPort serialGps { get; set; }
         private char[] indata { get; set; }
 
+        private dockDisplayGps _dockDisplayGps;
+        private dockControlGps _dockControlGps;
+        private dockBrowserMap _dockBrowserMap;
+        private dockTutorial _dockTutorial;
+        private dockRecordGps _dockRecordGps; 
+
         public mainForm()
         {
             InitializeComponent();
+
+            dockPanel1.Dock = DockStyle.Fill;
+
+            dockPanel1.Theme = new VS2015LightTheme();
+
+            _dockDisplayGps = new dockDisplayGps() { TabText = "GPS資訊概覽" };
+            _dockControlGps = new dockControlGps() { TabText = "GPS裝置控制" };
+            _dockBrowserMap = new dockBrowserMap() { TabText = "GPS位置顯示" };
+            _dockTutorial = new dockTutorial() { TabText = "連接教學" };
+            _dockRecordGps = new dockRecordGps() { TabText = "歷史記錄" };
+
+            _dockTutorial.Show(this.dockPanel1, DockState.Document);
         }
 
         private void mainForm_Load(object sender, EventArgs e)
@@ -51,7 +71,7 @@ namespace GPS_Resuce_Receiver_GUI
             tbxBaud.Text = "9600";
 
             /** Set Container Visible to False **/
-            splitContainer.Visible = false;
+            //splitContainer.Visible = false;
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
@@ -87,13 +107,25 @@ namespace GPS_Resuce_Receiver_GUI
                 {
                     serialGps.Open();
                     /** Set Container Visible to True **/
-                    splitContainer.Visible = true;
+                    //splitContainer.Visible = true;
 
                     /** Change Button Enable **/
                     btnConnect.Enabled = !btnConnect.Enabled;
                     btnDisconnect.Enabled = !btnDisconnect.Enabled;
 
+                    _dockTutorial.Hide();
+
+                    _dockDisplayGps.Show(this.dockPanel1, DockState.DockLeft);
+
+                    _dockControlGps.Show(_dockDisplayGps.Pane, DockAlignment.Bottom, 0.5);
+
+                    _dockBrowserMap.Show(this.dockPanel1, DockState.Document);
+
+                    _dockRecordGps.Show(this.dockPanel1, DockState.DockRightAutoHide);
+
                     /** Set Web Browser Pages to Google Map **/
+                    ChromiumWebBrowser browserMap = (ChromiumWebBrowser)_dockBrowserMap.Controls[0];
+
                     browserMap.Load(googleMapHost);
                 }
             }
@@ -117,8 +149,15 @@ namespace GPS_Resuce_Receiver_GUI
 
             serialGps.Close();
 
-            /** Set Container Visible to False **/
-            splitContainer.Visible = false;
+            _dockDisplayGps.Hide();
+
+            _dockBrowserMap.Hide();
+
+            _dockControlGps.Hide();
+
+            _dockRecordGps.Hide();
+
+            _dockTutorial.Show(this.dockPanel1, DockState.Document);
         }
 
         private void btnRefreshPort_Click(object sender, EventArgs e)
@@ -136,6 +175,7 @@ namespace GPS_Resuce_Receiver_GUI
         }
 
         private delegate void showGpsAddress(string srcStr);
+
         private void ShowGpsAddress(string srcStr)
         {
             //string testStr = "\x00\x01\x27\x0F" + "2413.00710,N,12035.05815,E,111520" + "\x0D\x0A";
@@ -143,8 +183,6 @@ namespace GPS_Resuce_Receiver_GUI
             // remove head count
             char[] array = srcStr.Remove(0, 2).ToCharArray();
             string locationStr = srcStr.Remove(0, 6);
-
-            string[]
 
             // get Device ID
             UInt16 deviceID = (ushort)((array[0] << 8) + array[1]);
@@ -168,12 +206,30 @@ namespace GPS_Resuce_Receiver_GUI
             gpsTime = GpsConvert.convertToCST(gpsTime);
 
             // Display in TextBox
-            tbClientID.Text = deviceID.ToString();
-            tbLatitude.Text = gpsLatitude + "N";
-            tbLongtitude.Text = gpsLongtitude + "E";
-            tbTime.Text = gpsTime;
+            foreach (Control c in _dockDisplayGps.Controls)
+            {
+                switch (c.Name)
+                {
+                    case "tbClientID":
+                        c.Text = deviceID.ToString();
+                        break;
+                    case "tbTime":
+                        c.Text = gpsTime;
+                        break;
+                    case "tbLatitude":
+                        c.Text = gpsLatitude + "N";
+                        break;
+                    case "tbLongtitude":
+                        c.Text = gpsLongtitude + "E";
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             // Browser Display
+            ChromiumWebBrowser browserMap = (ChromiumWebBrowser)_dockBrowserMap.Controls[0];
+
             browserMap.Load(googleMapHost + "/place/" + gpsLatitude + "N+" + gpsLongtitude + "E");
         }
 
