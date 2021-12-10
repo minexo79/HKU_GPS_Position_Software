@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GPS_Resuce_Receiver_GUI
 {
-    public static class GpsConvert
+    public static class gpsConvert
     {
         public static string convertToDMS(float src)
         {

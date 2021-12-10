@@ -18,6 +18,7 @@ namespace GPS_Resuce_Receiver_GUI
         private string googleMapHost = "https://www.google.com.tw/maps";
         private SerialPort serialGps { get; set; }
         private char[] indata { get; set; }
+        private historyList history { get; set; };
 
         private dockDisplayGps _dockDisplayGps;
         private dockControlGps _dockControlGps;
@@ -36,10 +37,12 @@ namespace GPS_Resuce_Receiver_GUI
             _dockDisplayGps = new dockDisplayGps() { TabText = "GPS資訊概覽" };
             _dockControlGps = new dockControlGps() { TabText = "GPS裝置控制" };
             _dockBrowserMap = new dockBrowserMap() { TabText = "GPS位置顯示" };
-            _dockTutorial = new dockTutorial() { TabText = "連接教學" };
+            _dockTutorial = new dockTutorial() { TabText = "Welcome And Tutorial" };
             _dockRecordGps = new dockRecordGps() { TabText = "歷史記錄" };
 
             _dockTutorial.Show(this.dockPanel1, DockState.Document);
+
+            history = new historyList();
         }
 
         private void mainForm_Load(object sender, EventArgs e)
@@ -115,11 +118,11 @@ namespace GPS_Resuce_Receiver_GUI
 
                     _dockTutorial.Hide();
 
+                    _dockBrowserMap.Show(this.dockPanel1, DockState.Document);
+
                     _dockDisplayGps.Show(this.dockPanel1, DockState.DockLeft);
 
                     _dockControlGps.Show(_dockDisplayGps.Pane, DockAlignment.Bottom, 0.5);
-
-                    _dockBrowserMap.Show(this.dockPanel1, DockState.Document);
 
                     _dockRecordGps.Show(this.dockPanel1, DockState.DockRightAutoHide);
 
@@ -200,31 +203,34 @@ namespace GPS_Resuce_Receiver_GUI
             float LongtitudeWithoutE = float.Parse(gpsLongtitude.Replace(",E", ""));
 
             // convert DMM TO DMS
-            gpsLatitude = GpsConvert.convertToDMS(LatitudeWithoutN);
-            gpsLongtitude = GpsConvert.convertToDMS(LongtitudeWithoutE);
+            gpsLatitude = gpsConvert.convertToDMS(LatitudeWithoutN);
+            gpsLongtitude = gpsConvert.convertToDMS(LongtitudeWithoutE);
             // convert UTC TO CST
-            gpsTime = GpsConvert.convertToCST(gpsTime);
+            gpsTime = gpsConvert.convertToCST(gpsTime);
 
             // Display in TextBox
             foreach (Control c in _dockDisplayGps.Controls)
             {
-                switch (c.Name)
+                foreach(Control _c in c.Controls)
                 {
-                    case "tbClientID":
-                        c.Text = deviceID.ToString();
-                        break;
-                    case "tbTime":
-                        c.Text = gpsTime;
-                        break;
-                    case "tbLatitude":
-                        c.Text = gpsLatitude + "N";
-                        break;
-                    case "tbLongtitude":
-                        c.Text = gpsLongtitude + "E";
-                        break;
-                    default:
-                        break;
-                }
+                    switch (_c.Name)
+                    {
+                        case "tbClientID":
+                            _c.Text = deviceID.ToString();
+                            break;
+                        case "tbTime":
+                            _c.Text = gpsTime;
+                            break;
+                        case "tbLatitude":
+                            _c.Text = gpsLatitude + "N";
+                            break;
+                        case "tbLongtitude":
+                            _c.Text = gpsLongtitude + "E";
+                            break;
+                        default:
+                            break;
+                    }
+                } 
             }
 
             // Browser Display
@@ -236,6 +242,12 @@ namespace GPS_Resuce_Receiver_GUI
         private void btnTest_Click(object sender, EventArgs e)
         {
             ShowGpsAddress("\x00\x01\x00\x01\x27\x0F" + "2413.00710,N,12035.05815,E,111520" + "\x0D\x0A");   
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            aboutForm _aboutForm = new aboutForm();
+            _aboutForm.ShowDialog();
         }
     }
 }

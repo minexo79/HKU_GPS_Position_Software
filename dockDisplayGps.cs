@@ -17,6 +17,7 @@ namespace GPS_Resuce_Receiver_GUI
         {
             InitializeComponent();
 
+            tableLayoutPanel1.AutoSize = true;
             CloseButton = false;
         }
     }

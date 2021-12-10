@@ -12,11 +12,19 @@ namespace GPS_Resuce_Receiver_GUI
         public string clientLongtitude { get; set; }
         public string clientLatitude { get; set; }
         public string clientUtcTime { get; set; }
+
+        public historyData(string _clientID, string _clientLo, string _clientLa, string _utcTime)
+        {
+            this.clientID = _clientID;
+            this.clientLongtitude = _clientLo;
+            this.clientLatitude = _clientLa;
+            this.clientUtcTime = _utcTime;
+        }
     }
 
     class historyList
     {
-        public List<historyData> historyDatas { get; set; }
+        private List<historyData> historyDatas { get; set; }
 
         public historyList()
         {
@@ -27,6 +35,11 @@ namespace GPS_Resuce_Receiver_GUI
         {
             this.historyDatas.Clear();
             this.historyDatas = null;
+        }
+
+        public void addList(string clientID, string clientLo, string clientLa, string utc)
+        {
+            this.historyDatas.Add(new historyData(clientID, clientLo, clientLa, utc));
         }
     }
 }

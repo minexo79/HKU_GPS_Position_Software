@@ -37,6 +37,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>img\app.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp, Version=96.0.142.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
       <HintPath>packages\CefSharp.Common.96.0.142\lib\net452\CefSharp.dll</HintPath>
@@ -67,6 +70,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="aboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="aboutForm.Designer.cs">
+      <DependentUpon>aboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="dockBrowserMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,7 +100,7 @@
     <Compile Include="dockTutorial.Designer.cs">
       <DependentUpon>dockTutorial.cs</DependentUpon>
     </Compile>
-    <Compile Include="GpsConvert.cs" />
+    <Compile Include="gpsConvert.cs" />
     <Compile Include="historyData.cs" />
     <Compile Include="dockDisplayGps.cs">
       <SubType>Form</SubType>
@@ -107,6 +116,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="aboutForm.resx">
+      <DependentUpon>aboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dockBrowserMap.resx">
       <DependentUpon>dockBrowserMap.cs</DependentUpon>
     </EmbeddedResource>
@@ -163,6 +175,8 @@
     <None Include="img\refresh.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="img\app.ico" />
+    <None Include="img\about.ico" />
     <Content Include="img\tutorial.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
