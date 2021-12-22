@@ -85,7 +85,7 @@ namespace GPS_Resuce_Receiver_GUI
             // btnConnect
             // 
             this.btnConnect.Font = new System.Drawing.Font("Microsoft JhengHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnConnect.Image = global::GPS_Resuce_Receiver_GUI.Properties.Resources.link;
+            this.btnConnect.Image = global::GPS_Resuce_Receiver.Properties.Resources.link;
             this.btnConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnConnect.Margin = new System.Windows.Forms.Padding(10, 1, 0, 2);
             this.btnConnect.Name = "btnConnect";
@@ -97,7 +97,7 @@ namespace GPS_Resuce_Receiver_GUI
             // btnDisconnect
             // 
             this.btnDisconnect.Font = new System.Drawing.Font("Microsoft JhengHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnDisconnect.Image = global::GPS_Resuce_Receiver_GUI.Properties.Resources.unlink;
+            this.btnDisconnect.Image = global::GPS_Resuce_Receiver.Properties.Resources.unlink;
             this.btnDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDisconnect.Margin = new System.Windows.Forms.Padding(10, 1, 0, 2);
             this.btnDisconnect.Name = "btnDisconnect";
@@ -110,7 +110,7 @@ namespace GPS_Resuce_Receiver_GUI
             // 
             this.btnAbout.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnAbout.Font = new System.Drawing.Font("Microsoft JhengHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAbout.Image = global::GPS_Resuce_Receiver_GUI.Properties.Resources.info;
+            this.btnAbout.Image = global::GPS_Resuce_Receiver.Properties.Resources.info;
             this.btnAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAbout.Margin = new System.Windows.Forms.Padding(0, 1, 10, 2);
             this.btnAbout.Name = "btnAbout";
@@ -121,7 +121,7 @@ namespace GPS_Resuce_Receiver_GUI
             // btnRefreshPort
             // 
             this.btnRefreshPort.Font = new System.Drawing.Font("Microsoft JhengHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnRefreshPort.Image = global::GPS_Resuce_Receiver_GUI.Properties.Resources.refresh;
+            this.btnRefreshPort.Image = global::GPS_Resuce_Receiver.Properties.Resources.refresh;
             this.btnRefreshPort.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRefreshPort.Name = "btnRefreshPort";
             this.btnRefreshPort.Size = new System.Drawing.Size(89, 24);

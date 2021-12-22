@@ -241,9 +241,6 @@ namespace GPS_Resuce_Receiver_GUI
                         }
                     }
 
-                    // save to list
-                    //history.addList();
-
                     _dockRecordGps.dataHistoryGps.Rows.Add
                     ( new string[] { deviceID.ToString(), gpsLongtitude + "E", gpsLatitude + "N", gpsTime } );
 
@@ -251,6 +248,7 @@ namespace GPS_Resuce_Receiver_GUI
                     ChromiumWebBrowser browserMap = (ChromiumWebBrowser)_dockBrowserMap.Controls[0];
                     browserMap.Load(googleMapHost + "/place/" + gpsLatitude + "N+" + gpsLongtitude + "E");
                 } 
+                // String length Error
                 catch (Exception ex)
                 {
                     // pass

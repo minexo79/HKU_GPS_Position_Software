@@ -9,8 +9,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{64F2A765-582A-410E-9694-66BA11F3086F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GPS_Resuce_Receiver_GUI</RootNamespace>
-    <AssemblyName>GPS_Resuce_Receiver_GUI</AssemblyName>
+    <RootNamespace>GPS_Resuce_Receiver</RootNamespace>
+    <AssemblyName>GPS_Resuce_Receiver</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

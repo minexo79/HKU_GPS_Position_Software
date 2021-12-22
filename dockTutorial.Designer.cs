@@ -34,7 +34,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::GPS_Resuce_Receiver_GUI.Properties.Resources.tutorial;
+            this.BackgroundImage = global::GPS_Resuce_Receiver.Properties.Resources.tutorial;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1125, 683);
             this.DoubleBuffered = true;
