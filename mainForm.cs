@@ -18,7 +18,7 @@ namespace GPS_Resuce_Receiver_GUI
         private string googleMapHost = "https://www.google.com.tw/maps";
         private SerialPort serialGps { get; set; }
         private char[] indata { get; set; }
-        private historyList history { get; set; };
+        //private historyList history { get; set; }
 
         private dockDisplayGps _dockDisplayGps;
         private dockControlGps _dockControlGps;
@@ -42,7 +42,9 @@ namespace GPS_Resuce_Receiver_GUI
 
             _dockTutorial.Show(this.dockPanel1, DockState.Document);
 
-            history = new historyList();
+            //history = new historyList();
+
+            //_dockRecordGps.dataHistoryGps.DataSource = history.historyDatas;
         }
 
         private void mainForm_Load(object sender, EventArgs e)
@@ -60,6 +62,9 @@ namespace GPS_Resuce_Receiver_GUI
             serialGps.Parity = Parity.None;
             serialGps.DataBits = 8;
             serialGps.StopBits = StopBits.One;
+
+            serialGps.NewLine = "\x0D\x0A";
+
             serialGps.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
 
             /** Add Ports Into ComboBox **/
@@ -81,12 +86,12 @@ namespace GPS_Resuce_Receiver_GUI
         {
             SerialPort se = (SerialPort)sender;
 
-            char[] _indata = new char[41];
+            //char[] _indata = new char[41];
 
-            for (int i = 0; i < _indata.Length;)
-                i += se.Read(_indata, i, _indata.Length - i);
+            //for (int i = 0; i < _indata.Length;)
+            //    i += se.Read(_indata, i, _indata.Length - i);
 
-            string indata = new string(_indata);
+            string indata = se.ReadLine();
 
             this.BeginInvoke(new showGpsAddress(ShowGpsAddress), new object[] { indata });
         }
@@ -150,7 +155,9 @@ namespace GPS_Resuce_Receiver_GUI
             btnConnect.Enabled = !btnConnect.Enabled;
             btnDisconnect.Enabled = !btnDisconnect.Enabled;
 
+            _dockControlGps.resetFilter();  // reset Filter
             serialGps.Close();
+            _dockRecordGps.dataHistoryGps.Rows.Clear();
 
             _dockDisplayGps.Hide();
 
@@ -190,53 +197,66 @@ namespace GPS_Resuce_Receiver_GUI
             // get Device ID
             UInt16 deviceID = (ushort)((array[0] << 8) + array[1]);
 
-            // 緯度
-            string gpsLatitude = locationStr.Substring(0, locationStr.IndexOf('N') + 1);
-            // 經度
-            string gpsLongtitude = locationStr.Substring(locationStr.IndexOf('N') + 2,
-                                                         locationStr.IndexOf('E') - (gpsLatitude.Length));
-            // UTC時間
-            string gpsTime = locationStr.Substring(locationStr.IndexOf('E') + 2, 6);
-
-            // convert To Float
-            float LatitudeWithoutN = float.Parse(gpsLatitude.Replace(",N", ""));
-            float LongtitudeWithoutE = float.Parse(gpsLongtitude.Replace(",E", ""));
-
-            // convert DMM TO DMS
-            gpsLatitude = gpsConvert.convertToDMS(LatitudeWithoutN);
-            gpsLongtitude = gpsConvert.convertToDMS(LongtitudeWithoutE);
-            // convert UTC TO CST
-            gpsTime = gpsConvert.convertToCST(gpsTime);
-
-            // Display in TextBox
-            foreach (Control c in _dockDisplayGps.Controls)
+            if (deviceID == _dockControlGps.id || _dockControlGps.id == 0)
             {
-                foreach(Control _c in c.Controls)
+                // 緯度
+                string gpsLatitude = locationStr.Substring(0, locationStr.IndexOf('N') + 1);
+                // 經度
+                string gpsLongtitude = locationStr.Substring(locationStr.IndexOf('N') + 2,
+                                                             locationStr.IndexOf('E') - (gpsLatitude.Length));
+                // UTC時間
+                string gpsTime = locationStr.Substring(locationStr.IndexOf('E') + 2, 6);
+
+                // convert To Float
+                float LatitudeWithoutN = float.Parse(gpsLatitude.Replace(",N", ""));
+                float LongtitudeWithoutE = float.Parse(gpsLongtitude.Replace(",E", ""));
+
+                // convert DMM TO DMS
+                gpsLatitude = gpsConvert.convertToDMS(LatitudeWithoutN);
+                gpsLongtitude = gpsConvert.convertToDMS(LongtitudeWithoutE);
+                // convert UTC TO CST
+                gpsTime = gpsConvert.convertToCST(gpsTime);
+
+                // Display in TextBox
+                foreach (Control c in _dockDisplayGps.Controls)
                 {
-                    switch (_c.Name)
+                    foreach (Control _c in c.Controls)
                     {
-                        case "tbClientID":
-                            _c.Text = deviceID.ToString();
-                            break;
-                        case "tbTime":
-                            _c.Text = gpsTime;
-                            break;
-                        case "tbLatitude":
-                            _c.Text = gpsLatitude + "N";
-                            break;
-                        case "tbLongtitude":
-                            _c.Text = gpsLongtitude + "E";
-                            break;
-                        default:
-                            break;
+                        switch (_c.Name)
+                        {
+                            case "tbClientID":
+                                _c.Text = deviceID.ToString();
+                                break;
+                            case "tbTime":
+                                _c.Text = gpsTime;
+                                break;
+                            case "tbLatitude":
+                                _c.Text = gpsLatitude + "N";
+                                break;
+                            case "tbLongtitude":
+                                _c.Text = gpsLongtitude + "E";
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                } 
+                }
+
+                // save to list
+                //history.addList();
+
+                _dockRecordGps.dataHistoryGps.Rows.Add
+                (
+                    new string[] { deviceID.ToString(), gpsLongtitude + "E", gpsLatitude + "N", gpsTime }
+                );
+
+                // Browser Display
+                ChromiumWebBrowser browserMap = (ChromiumWebBrowser)_dockBrowserMap.Controls[0];
+
+                browserMap.Load(googleMapHost + "/place/" + gpsLatitude + "N+" + gpsLongtitude + "E");
             }
 
-            // Browser Display
-            ChromiumWebBrowser browserMap = (ChromiumWebBrowser)_dockBrowserMap.Controls[0];
-
-            browserMap.Load(googleMapHost + "/place/" + gpsLatitude + "N+" + gpsLongtitude + "E");
+            
         }
 
         private void btnTest_Click(object sender, EventArgs e)

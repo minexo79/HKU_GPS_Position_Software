@@ -24,7 +24,7 @@ namespace GPS_Resuce_Receiver_GUI
 
     class historyList
     {
-        private List<historyData> historyDatas { get; set; }
+        public List<historyData> historyDatas { get; set; }
 
         public historyList()
         {

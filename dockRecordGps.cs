@@ -13,6 +13,7 @@ namespace GPS_Resuce_Receiver_GUI
 {
     public partial class dockRecordGps : DockContent
     {
+
         public dockRecordGps()
         {
             InitializeComponent();
