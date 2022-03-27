@@ -115,10 +115,8 @@
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(311, 114);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
@@ -127,7 +125,7 @@
             this.lblAboutLibrary.AutoSize = true;
             this.lblAboutLibrary.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAboutLibrary.ForeColor = System.Drawing.Color.DarkOrange;
-            this.lblAboutLibrary.Location = new System.Drawing.Point(3, 72);
+            this.lblAboutLibrary.Location = new System.Drawing.Point(3, 94);
             this.lblAboutLibrary.Margin = new System.Windows.Forms.Padding(3);
             this.lblAboutLibrary.Name = "lblAboutLibrary";
             this.lblAboutLibrary.Size = new System.Drawing.Size(99, 17);

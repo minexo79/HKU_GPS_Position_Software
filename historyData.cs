@@ -12,13 +12,16 @@ namespace GPS_Resuce_Receiver_GUI
         public string clientLongtitude { get; set; }
         public string clientLatitude { get; set; }
         public string clientUtcTime { get; set; }
-
-        public historyData(string _clientID, string _clientLo, string _clientLa, string _utcTime)
+        public string clientErrCode { get; set; }
+        public string sysTime { get; set; }
+        public historyData(string _clientID, string _clientLo, string _clientLa, string _utcTime, string _errCode, string _sysTime)
         {
             this.clientID = _clientID;
             this.clientLongtitude = _clientLo;
             this.clientLatitude = _clientLa;
             this.clientUtcTime = _utcTime;
+            this.clientErrCode = _errCode;
+            this.sysTime = _sysTime;
         }
     }
 
@@ -37,9 +40,9 @@ namespace GPS_Resuce_Receiver_GUI
             this.historyDatas = null;
         }
 
-        public void addList(string clientID, string clientLo, string clientLa, string utc)
+        public void addList(string clientID, string clientLo, string clientLa, string utc, string errCode, string time)
         {
-            this.historyDatas.Add(new historyData(clientID, clientLo, clientLa, utc));
+            this.historyDatas.Add(new historyData(clientID, clientLo, clientLa, utc, errCode, time));
         }
     }
 }

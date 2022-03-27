@@ -177,6 +177,7 @@
   <ItemGroup>
     <None Include="img\app.ico" />
     <None Include="img\about.ico" />
+    <None Include="img\pakcet.png" />
     <Content Include="img\tutorial.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

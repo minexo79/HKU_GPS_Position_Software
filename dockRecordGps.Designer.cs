@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.dataHistoryGps = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Longtitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Latitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gpsTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnExport = new System.Windows.Forms.Button();
+            this.gpsErrCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sysTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataHistoryGps)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -43,77 +44,90 @@
             // 
             this.dataHistoryGps.AllowUserToAddRows = false;
             this.dataHistoryGps.AllowUserToDeleteRows = false;
+            this.dataHistoryGps.AllowUserToResizeColumns = false;
+            this.dataHistoryGps.AllowUserToResizeRows = false;
             this.dataHistoryGps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataHistoryGps.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
             this.Longtitude,
             this.Latitude,
-            this.gpsTime});
+            this.gpsTime,
+            this.gpsErrCode,
+            this.sysTime});
             this.dataHistoryGps.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataHistoryGps.Location = new System.Drawing.Point(0, 29);
+            this.dataHistoryGps.Location = new System.Drawing.Point(0, 3);
             this.dataHistoryGps.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.dataHistoryGps.MultiSelect = false;
             this.dataHistoryGps.Name = "dataHistoryGps";
             this.dataHistoryGps.ReadOnly = true;
-            this.dataHistoryGps.Size = new System.Drawing.Size(800, 421);
+            this.dataHistoryGps.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataHistoryGps.Size = new System.Drawing.Size(566, 624);
             this.dataHistoryGps.TabIndex = 0;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.dataHistoryGps, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(566, 617);
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // ID
             // 
-            this.ID.HeaderText = "裝置編號";
+            this.ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.ID.HeaderText = "編號";
             this.ID.Name = "ID";
             this.ID.ReadOnly = true;
+            this.ID.Width = 56;
             // 
             // Longtitude
             // 
+            this.Longtitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Longtitude.HeaderText = "經度";
             this.Longtitude.Name = "Longtitude";
             this.Longtitude.ReadOnly = true;
             // 
             // Latitude
             // 
+            this.Latitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Latitude.HeaderText = "緯度";
             this.Latitude.Name = "Latitude";
             this.Latitude.ReadOnly = true;
             // 
             // gpsTime
             // 
+            this.gpsTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.gpsTime.HeaderText = "GPS時間";
             this.gpsTime.Name = "gpsTime";
             this.gpsTime.ReadOnly = true;
             // 
-            // tableLayoutPanel1
+            // gpsErrCode
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.dataHistoryGps, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnExport, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.gpsErrCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.gpsErrCode.HeaderText = "代碼";
+            this.gpsErrCode.Name = "gpsErrCode";
+            this.gpsErrCode.ReadOnly = true;
+            this.gpsErrCode.Width = 56;
             // 
-            // btnExport
+            // sysTime
             // 
-            this.btnExport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnExport.Font = new System.Drawing.Font("Microsoft JhengHei", 10F);
-            this.btnExport.Location = new System.Drawing.Point(0, 3);
-            this.btnExport.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(800, 23);
-            this.btnExport.TabIndex = 1;
-            this.btnExport.Text = "匯出紀錄";
-            this.btnExport.UseVisualStyleBackColor = true;
+            this.sysTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.sysTime.HeaderText = "系統時間";
+            this.sysTime.Name = "sysTime";
+            this.sysTime.ReadOnly = true;
             // 
             // dockRecordGps
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(566, 617);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "dockRecordGps";
             this.Text = "dockRecordGps";
@@ -126,11 +140,12 @@
         #endregion
 
         public System.Windows.Forms.DataGridView dataHistoryGps;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Longtitude;
         private System.Windows.Forms.DataGridViewTextBoxColumn Latitude;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpsTime;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpsErrCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sysTime;
     }
 }

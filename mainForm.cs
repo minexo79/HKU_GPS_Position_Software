@@ -81,7 +81,6 @@ namespace GPS_Resuce_Receiver_GUI
             /** Set Container Visible to False **/
             //splitContainer.Visible = false;
         }
-
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort se = (SerialPort)sender;
@@ -95,7 +94,6 @@ namespace GPS_Resuce_Receiver_GUI
 
             this.BeginInvoke(new showGpsAddress(ShowGpsAddress), new object[] { indata });
         }
-
         private void btnConnect_Click(object sender, EventArgs e)
         {
             /**
@@ -123,18 +121,18 @@ namespace GPS_Resuce_Receiver_GUI
 
                     _dockTutorial.Hide();
 
+                    _dockRecordGps.Show(this.dockPanel1, DockState.Document);
+
                     _dockBrowserMap.Show(this.dockPanel1, DockState.Document);
 
                     _dockDisplayGps.Show(this.dockPanel1, DockState.DockLeft);
 
                     _dockControlGps.Show(_dockDisplayGps.Pane, DockAlignment.Bottom, 0.5);
 
-                    _dockRecordGps.Show(this.dockPanel1, DockState.DockRightAutoHide);
-
                     /** Set Web Browser Pages to Google Map **/
                     ChromiumWebBrowser browserMap = (ChromiumWebBrowser)_dockBrowserMap.Controls[0];
 
-                    browserMap.Load(googleMapHost);
+                    browserMap.LoadUrlAsync(googleMapHost).GetAwaiter();
                 }
             }
             catch (Exception ex)
@@ -197,7 +195,16 @@ namespace GPS_Resuce_Receiver_GUI
             // get Device ID
             UInt16 deviceID = (ushort)((array[0] << 8) + array[1]);
 
-            if (deviceID == _dockControlGps.id || _dockControlGps.id == 0)
+            // get systemTime
+            string systemTime = DateTime.Now.ToString("HH:mm:ss");
+
+            if (locationStr.StartsWith("00000"))
+            {
+                _dockRecordGps.dataHistoryGps.Rows.Add
+                    (new string[] { deviceID.ToString(), "00.00000" + "E", "00.00000" + "N", "00:00:00", "1", systemTime});
+            }
+
+            else if (deviceID == _dockControlGps.id || _dockControlGps.id == 0)
             {
                 try
                 {
@@ -242,24 +249,26 @@ namespace GPS_Resuce_Receiver_GUI
                     }
 
                     _dockRecordGps.dataHistoryGps.Rows.Add
-                    ( new string[] { deviceID.ToString(), gpsLongtitude + "E", gpsLatitude + "N", gpsTime } );
+                    ( new string[] { deviceID.ToString(), gpsLongtitude + "E", gpsLatitude + "N", gpsTime, "0", systemTime } );
 
                     // Browser Display
                     ChromiumWebBrowser browserMap = (ChromiumWebBrowser)_dockBrowserMap.Controls[0];
-                    browserMap.Load(googleMapHost + "/place/" + gpsLatitude + "N+" + gpsLongtitude + "E");
+                    browserMap.LoadUrlAsync(googleMapHost + "/place/" + gpsLatitude + "N+" + gpsLongtitude + "E").GetAwaiter();
                 } 
                 // String length Error
                 catch (Exception ex)
                 {
                     // pass
                 }
-               
-            }    
+            }
+
+            if (_dockRecordGps.dataHistoryGps.Rows.Count == 101)
+                _dockRecordGps.dataHistoryGps.Rows.RemoveAt(0);
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            ShowGpsAddress("\x00\x01\x00\x01\x27\x0F" + "2413.00710,N,12035.05815,E,111520" + "\x0D\x0A");   
+            ShowGpsAddress("\x00\x01\x00\x01\x27\x0F" + "00000" + "\x0D\x0A");   
         }
 
         private void btnAbout_Click(object sender, EventArgs e)

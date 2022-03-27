@@ -130,13 +130,14 @@ namespace GPS_Resuce_Receiver_GUI
             // 
             // toolStripButton1
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripButton1.Enabled = false;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.Font = new System.Drawing.Font("Microsoft JhengHei UI", 11.25F);
+            this.toolStripButton1.Image = global::GPS_Resuce_Receiver.Properties.Resources.pakcet;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 24);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(89, 24);
+            this.toolStripButton1.Text = "封包測試";
             this.toolStripButton1.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // dockPanel1
